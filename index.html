@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LunaWhizz — Web & Mobile Development Studio</title>
+  <meta name="description" content="LunaWhizz is a creative web & mobile app development studio crafting stellar digital experiences." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            luna: {
+              50:  '#f0edff',
+              100: '#e2dbff',
+              200: '#c5b6ff',
+              300: '#a78eff',
+              400: '#8a64ff',
+              500: '#6d3aff',
+              600: '#5a1fff',
+              700: '#4a10e0',
+              800: '#3a0db0',
+              900: '#260a7a',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-18px)' },
+            },
+            glow: {
+              from: { boxShadow: '0 0 20px #6d3aff44' },
+              to:   { boxShadow: '0 0 50px #6d3affcc, 0 0 100px #6d3aff44' },
+            },
+            slideUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to:   { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Base ── */
+    html { background: #07040f; }
+
+    /* Gradient text utility */
+    .grad-text {
+      background: linear-gradient(135deg, #a78eff 0%, #6d3aff 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-text-warm {
+      background: linear-gradient(135deg, #f472b6 0%, #a78eff 50%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Stars background */
+    .stars-bg {
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 55% 15%, rgba(255,255,255,.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 85%, rgba(255,255,255,.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 70%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 35%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 10%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,.3) 0%, transparent 100%);
+    }
+
+    /* Glass card */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+    }
+    .glass-hover {
+      transition: all 0.3s ease;
+    }
+    .glass-hover:hover {
+      background: rgba(109,58,255,0.12);
+      border-color: rgba(109,58,255,0.4);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(109,58,255,0.2);
+    }
+
+    /* Nav link underline animation */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg,#6d3aff,#c084fc);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Sites dropdown */
+    .sites-dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    }
+    .sites-trigger:focus-within .sites-dropdown,
+    .sites-trigger:hover .sites-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Site card badge */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    /* Neon button */
+    .btn-luna {
+      background: linear-gradient(135deg,#6d3aff,#a855f7);
+      transition: all .3s ease;
+    }
+    .btn-luna:hover {
+      box-shadow: 0 0 30px rgba(109,58,255,.6), 0 0 60px rgba(109,58,255,.3);
+      transform: translateY(-2px);
+    }
+
+    /* Orbit ring decoration */
+    .orbit {
+      border-radius: 50%;
+      border: 1px dashed rgba(109,58,255,.25);
+      animation: spin 20s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Section fade-in on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #07040f; }
+    ::-webkit-scrollbar-thumb { background: #6d3aff; border-radius: 3px; }
+  </style>
+</head>
+<body class="font-sans bg-[#07040f] text-white antialiased overflow-x-hidden">
+
+  <!-- ════════════════════════════════
+       NAV
+  ════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl btn-luna flex items-center justify-center shadow-lg">
+          <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5" stroke="white" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="white" stroke="none"/>
+          </svg>
+        </div>
+        <span class="text-xl font-800 tracking-tight">
+          <span class="grad-text font-black">Luna</span><span class="text-white font-semibold">Whizz</span>
+        </span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#services" class="nav-link text-sm text-gray-300 hover:text-white transition-colors">Services</a>
+        <a href="#portfolio" class="nav-link text-sm text-gray-300 hover:text-white transition-colors">Portfolio</a>
+
+        <!-- Sites dropdown trigger -->
+        <div class="sites-trigger relative">
+          <button class="nav-link flex items-center gap-1.5 text-sm text-gray-300 hover:text-white transition-colors focus:outline-none">
+            Sites
+            <svg id="sites-chevron" class="w-3.5 h-3.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+
+          <!-- Dropdown panel -->
+          <div class="sites-dropdown absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 rounded-2xl overflow-hidden" style="background:rgba(12,8,24,0.95);border:1px solid rgba(109,58,255,0.25);box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(109,58,255,0.1);">
+            <!-- Arrow pointer -->
+            <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45" style="background:rgba(12,8,24,0.95);border-left:1px solid rgba(109,58,255,0.25);border-top:1px solid rgba(109,58,255,0.25);"></div>
+
+            <div class="p-2">
+              <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-widest">Our Platforms</div>
+
+              <!-- Luna Shortzz -->
+              <a href="#portfolio" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white group-hover:text-pink-300 transition-colors">Luna Shortzz</div>
+                  <div class="text-xs text-gray-500">Short video platform</div>
+                </div>
+                <svg class="w-3.5 h-3.5 text-gray-600 group-hover:text-pink-400 ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </a>
+
+              <!-- LunaFlix -->
+              <a href="#portfolio" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 to-rose-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white group-hover:text-red-300 transition-colors">LunaFlix</div>
+                  <div class="text-xs text-gray-500">Streaming platform</div>
+                </div>
+                <svg class="w-3.5 h-3.5 text-gray-600 group-hover:text-red-400 ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </a>
+
+              <!-- Luna TicTacToe -->
+              <a href="#portfolio" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-white group-hover:text-green-300 transition-colors">Luna TicTacToe</div>
+                  <div class="text-xs text-gray-500">Multiplayer game</div>
+                </div>
+                <svg class="w-3.5 h-3.5 text-gray-600 group-hover:text-green-400 ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </a>
+
+              <!-- Footer link -->
+              <div class="mx-3 mt-1 mb-1 border-t border-white/5 pt-2">
+                <a href="#portfolio" class="flex items-center justify-center gap-1.5 text-xs text-luna-400 hover:text-luna-300 py-1.5 transition-colors font-medium">
+                  View all projects
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="#about" class="nav-link text-sm text-gray-300 hover:text-white transition-colors">About</a>
+        <a href="#contact" class="nav-link text-sm text-gray-300 hover:text-white transition-colors">Contact</a>
+      </div>
+
+      <!-- CTA -->
+      <a href="#contact" class="hidden md:inline-flex items-center gap-2 btn-luna text-white text-sm font-semibold px-5 py-2.5 rounded-xl">
+        Get a Quote
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-btn" class="md:hidden text-gray-300 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden glass mx-4 mb-4 rounded-2xl p-5">
+      <div class="flex flex-col gap-1">
+        <a href="#services" class="px-3 py-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium" onclick="closeMobile()">Services</a>
+        <a href="#portfolio" class="px-3 py-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium" onclick="closeMobile()">Portfolio</a>
+
+        <!-- Mobile Sites accordion -->
+        <div>
+          <button onclick="toggleMobileSites()" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+            Sites
+            <svg id="mobile-sites-chevron" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div id="mobile-sites-list" class="hidden flex-col gap-1 mt-1 ml-3 pl-3 border-l border-luna-500/20">
+            <a href="#portfolio" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 transition-colors group" onclick="closeMobile()">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm text-white font-medium">Luna Shortzz</div>
+                <div class="text-xs text-gray-500">Short videos</div>
+              </div>
+            </a>
+            <a href="#portfolio" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 transition-colors group" onclick="closeMobile()">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-red-600 to-rose-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm text-white font-medium">LunaFlix</div>
+                <div class="text-xs text-gray-500">Streaming</div>
+              </div>
+            </a>
+            <a href="#portfolio" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 transition-colors group" onclick="closeMobile()">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm text-white font-medium">Luna TicTacToe</div>
+                <div class="text-xs text-gray-500">Multiplayer game</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="#about" class="px-3 py-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium" onclick="closeMobile()">About</a>
+        <a href="#contact" class="px-3 py-2.5 rounded-xl text-gray-300 hover:text-white hover:bg-white/5 transition-all text-sm font-medium" onclick="closeMobile()">Contact</a>
+        <div class="pt-2 mt-1 border-t border-white/5">
+          <a href="#contact" class="btn-luna block text-center text-white text-sm font-semibold px-5 py-3 rounded-xl" onclick="closeMobile()">Get a Quote</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════
+       HERO
+  ════════════════════════════════ -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden stars-bg">
+    <!-- Background glow blobs -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-luna-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Orbit decorations -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] orbit pointer-events-none opacity-30 hidden lg:block"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] orbit pointer-events-none opacity-15 hidden lg:block" style="animation-direction:reverse; animation-duration:30s;"></div>
+
+    <!-- Floating moon icon -->
+    <div class="absolute top-24 right-16 animate-float opacity-60 hidden lg:block">
+      <div class="w-20 h-20 bg-gradient-to-br from-luna-400 to-purple-500 rounded-full blur-sm"></div>
+    </div>
+    <div class="absolute bottom-32 left-16 animate-float opacity-40 hidden lg:block" style="animation-delay:3s;">
+      <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-luna-500 rounded-full blur-sm"></div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="relative max-w-5xl mx-auto px-6 text-center pt-20">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 text-sm text-luna-300 font-medium border border-luna-500/20">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse-slow"></span>
+        Available for new projects
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight mb-6">
+        <span class="block text-white">We Build</span>
+        <span class="block grad-text">Stellar Digital</span>
+        <span class="block text-white">Experiences</span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="max-w-2xl mx-auto text-gray-400 text-lg sm:text-xl leading-relaxed mb-10">
+        LunaWhizz is a creative studio specialising in cutting-edge <span class="text-white font-medium">web development</span> and <span class="text-white font-medium">mobile app development</span> — from idea to launch, we craft products that shine.
+      </p>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#portfolio" class="btn-luna px-8 py-4 rounded-2xl font-semibold text-lg w-full sm:w-auto text-center shadow-2xl">
+          View Our Work
+        </a>
+        <a href="#contact" class="glass border border-white/10 hover:border-luna-500/40 px-8 py-4 rounded-2xl font-semibold text-lg w-full sm:w-auto text-center transition-all duration-300 hover:bg-luna-600/10">
+          Start a Project
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-6 max-w-lg mx-auto mt-20">
+        <div class="text-center">
+          <div class="text-3xl font-black grad-text">50+</div>
+          <div class="text-gray-500 text-sm mt-1">Projects</div>
+        </div>
+        <div class="text-center border-x border-white/5">
+          <div class="text-3xl font-black grad-text">3+</div>
+          <div class="text-gray-500 text-sm mt-1">Years</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-black grad-text">100%</div>
+          <div class="text-gray-500 text-sm mt-1">Satisfied</div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="mt-16 flex flex-col items-center gap-2 text-gray-600 text-xs animate-bounce">
+        <span>Scroll to explore</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       SERVICES
+  ════════════════════════════════ -->
+  <section id="services" class="py-28 px-6">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section label -->
+      <div class="text-center mb-16 reveal">
+        <span class="badge bg-luna-500/15 text-luna-300 border border-luna-500/20 mb-4">What We Do</span>
+        <h2 class="text-4xl sm:text-5xl font-black mb-4">
+          Our <span class="grad-text">Services</span>
+        </h2>
+        <p class="text-gray-400 max-w-xl mx-auto">End-to-end digital solutions tailored to your vision, delivered with precision and creativity.</p>
+      </div>
+
+      <!-- Service cards -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Web Dev -->
+        <div class="glass glass-hover rounded-3xl p-8 reveal">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-luna-600 flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Web Development</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">Modern, performant websites and web apps built with React, Next.js, and cutting-edge technologies. From landing pages to complex SaaS platforms.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge bg-blue-500/10 text-blue-400">React</span>
+            <span class="badge bg-blue-500/10 text-blue-400">Next.js</span>
+            <span class="badge bg-blue-500/10 text-blue-400">Node.js</span>
+            <span class="badge bg-blue-500/10 text-blue-400">TypeScript</span>
+          </div>
+        </div>
+
+        <!-- Mobile App -->
+        <div class="glass glass-hover rounded-3xl p-8 reveal" style="transition-delay:.1s">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Mobile App Development</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">Native and cross-platform mobile apps for iOS & Android that users love. Smooth animations, intuitive UX, and lightning-fast performance.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge bg-pink-500/10 text-pink-400">React Native</span>
+            <span class="badge bg-pink-500/10 text-pink-400">Flutter</span>
+            <span class="badge bg-pink-500/10 text-pink-400">iOS</span>
+            <span class="badge bg-pink-500/10 text-pink-400">Android</span>
+          </div>
+        </div>
+
+        <!-- UI/UX -->
+        <div class="glass glass-hover rounded-3xl p-8 reveal" style="transition-delay:.2s">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 8a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zm12 0a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">UI/UX Design</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">Beautiful, user-centred design that converts. We craft pixel-perfect interfaces backed by solid UX principles and user research.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge bg-amber-500/10 text-amber-400">Figma</span>
+            <span class="badge bg-amber-500/10 text-amber-400">Prototyping</span>
+            <span class="badge bg-amber-500/10 text-amber-400">Design Systems</span>
+          </div>
+        </div>
+
+        <!-- Backend & API -->
+        <div class="glass glass-hover rounded-3xl p-8 reveal" style="transition-delay:.3s">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Backend & APIs</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">Scalable server infrastructure, RESTful & GraphQL APIs, database design, and cloud deployments built for performance and reliability.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge bg-green-500/10 text-green-400">Node.js</span>
+            <span class="badge bg-green-500/10 text-green-400">Python</span>
+            <span class="badge bg-green-500/10 text-green-400">PostgreSQL</span>
+            <span class="badge bg-green-500/10 text-green-400">AWS</span>
+          </div>
+        </div>
+
+        <!-- E-Commerce -->
+        <div class="glass glass-hover rounded-3xl p-8 reveal" style="transition-delay:.4s">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">E-Commerce</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">Full-featured online stores with seamless checkout, inventory management, and payment gateway integration to maximise your revenue.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge bg-cyan-500/10 text-cyan-400">Shopify</span>
+            <span class="badge bg-cyan-500/10 text-cyan-400">WooCommerce</span>
+            <span class="badge bg-cyan-500/10 text-cyan-400">Stripe</span>
+          </div>
+        </div>
+
+        <!-- SEO / Perf -->
+        <div class="glass glass-hover rounded-3xl p-8 reveal" style="transition-delay:.5s">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-luna-500 to-pink-500 flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">SEO & Performance</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">Rank higher and load faster. Core Web Vitals optimisation, technical SEO audits, and performance engineering to give you the edge.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="badge bg-luna-500/10 text-luna-300">Core Web Vitals</span>
+            <span class="badge bg-luna-500/10 text-luna-300">Lighthouse</span>
+            <span class="badge bg-luna-500/10 text-luna-300">Analytics</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       PORTFOLIO / SITES
+  ════════════════════════════════ -->
+  <section id="portfolio" class="py-28 px-6 relative">
+    <!-- Background -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-luna-900/10 to-transparent pointer-events-none"></div>
+    <div class="absolute top-0 left-0 w-72 h-72 bg-luna-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 right-0 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto">
+      <!-- Section label -->
+      <div class="text-center mb-16 reveal">
+        <span class="badge bg-luna-500/15 text-luna-300 border border-luna-500/20 mb-4">Our Creations</span>
+        <h2 class="text-4xl sm:text-5xl font-black mb-4">
+          Luna <span class="grad-text">Sites</span>
+        </h2>
+        <p class="text-gray-400 max-w-xl mx-auto">A glimpse at the digital worlds we've launched under the Luna constellation.</p>
+      </div>
+
+      <!-- Portfolio grid — rendered from SITES array below -->
+      <div id="sites-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+      <!-- More projects pill -->
+      <div class="text-center mt-12 reveal">
+        <a href="#contact" class="inline-flex items-center gap-2 glass border border-white/10 hover:border-luna-500/30 px-6 py-3 rounded-full text-gray-300 hover:text-white text-sm font-medium transition-all duration-300">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          More projects coming soon — let's build yours
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       ABOUT
+  ════════════════════════════════ -->
+  <section id="about" class="py-28 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Left — visual -->
+        <div class="relative reveal">
+          <div class="relative w-full max-w-md mx-auto">
+            <!-- Main card -->
+            <div class="glass rounded-3xl p-8 border border-luna-500/20 animate-glow">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 btn-luna rounded-2xl flex items-center justify-center shadow-lg">
+                  <svg viewBox="0 0 24 24" fill="none" class="w-7 h-7" stroke="white" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="white" stroke="none"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-bold text-white">LunaWhizz Studio</div>
+                  <div class="text-gray-400 text-sm">Est. 2022</div>
+                </div>
+              </div>
+              <!-- Tech stack icons row -->
+              <div class="grid grid-cols-4 gap-3 mb-6">
+                <div class="glass rounded-xl p-3 text-center">
+                  <div class="text-2xl mb-1">⚛️</div>
+                  <div class="text-xs text-gray-400">React</div>
+                </div>
+                <div class="glass rounded-xl p-3 text-center">
+                  <div class="text-2xl mb-1">📱</div>
+                  <div class="text-xs text-gray-400">Mobile</div>
+                </div>
+                <div class="glass rounded-xl p-3 text-center">
+                  <div class="text-2xl mb-1">🚀</div>
+                  <div class="text-xs text-gray-400">Next.js</div>
+                </div>
+                <div class="glass rounded-xl p-3 text-center">
+                  <div class="text-2xl mb-1">🎨</div>
+                  <div class="text-xs text-gray-400">Design</div>
+                </div>
+              </div>
+              <!-- Progress bars -->
+              <div class="space-y-3">
+                <div>
+                  <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Web Development</span><span>95%</span></div>
+                  <div class="h-1.5 bg-white/5 rounded-full"><div class="h-full w-[95%] bg-gradient-to-r from-luna-500 to-purple-400 rounded-full"></div></div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Mobile Apps</span><span>88%</span></div>
+                  <div class="h-1.5 bg-white/5 rounded-full"><div class="h-full w-[88%] bg-gradient-to-r from-pink-500 to-luna-500 rounded-full"></div></div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-gray-400 mb-1"><span>UI/UX Design</span><span>92%</span></div>
+                  <div class="h-1.5 bg-white/5 rounded-full"><div class="h-full w-[92%] bg-gradient-to-r from-amber-400 to-pink-500 rounded-full"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating badges -->
+            <div class="absolute -top-4 -right-4 glass rounded-2xl px-4 py-2 text-sm font-medium text-green-400 border border-green-500/20 animate-float" style="animation-delay:1s;">
+              ✅ 100% On-Time Delivery
+            </div>
+            <div class="absolute -bottom-4 -left-4 glass rounded-2xl px-4 py-2 text-sm font-medium text-luna-300 border border-luna-500/20 animate-float" style="animation-delay:2.5s;">
+              🌙 50+ Projects Shipped
+            </div>
+          </div>
+        </div>
+
+        <!-- Right — text -->
+        <div class="reveal" style="transition-delay:.2s">
+          <span class="badge bg-luna-500/15 text-luna-300 border border-luna-500/20 mb-4">Who We Are</span>
+          <h2 class="text-4xl sm:text-5xl font-black mb-6 leading-tight">
+            Crafting the <span class="grad-text">Future</span><br/>of the Web
+          </h2>
+          <p class="text-gray-400 leading-relaxed mb-6">
+            We're a passionate team of developers, designers, and strategists united by one mission — building digital products that are as beautiful as they are powerful.
+          </p>
+          <p class="text-gray-400 leading-relaxed mb-8">
+            From scrappy startups to established enterprises, we bring the same level of craft, attention to detail, and relentless energy to every project we touch. The moon is not our limit — it's just our first stop.
+          </p>
+
+          <!-- Values -->
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-luna-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-luna-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold text-white text-sm mb-1">Quality over quantity</div>
+                <div class="text-gray-500 text-sm">Every pixel and every line of code is intentional.</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-pink-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold text-white text-sm mb-1">Transparent communication</div>
+                <div class="text-gray-500 text-sm">No black boxes — you're always in the loop.</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold text-white text-sm mb-1">Results-driven</div>
+                <div class="text-gray-500 text-sm">We measure success by your growth, not just deliverables.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       CONTACT / CTA
+  ════════════════════════════════ -->
+  <section id="contact" class="py-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="glass rounded-3xl p-8 sm:p-14 text-center border border-luna-500/20 relative overflow-hidden reveal">
+        <!-- Glow blobs -->
+        <div class="absolute top-0 left-1/4 w-72 h-72 bg-luna-600/20 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-600/15 rounded-full blur-3xl pointer-events-none translate-y-1/2"></div>
+
+        <div class="relative">
+          <div class="w-16 h-16 btn-luna rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+          </div>
+
+          <h2 class="text-4xl sm:text-5xl font-black mb-4">
+            Ready to <span class="grad-text-warm">Launch</span>?
+          </h2>
+          <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
+            Got an idea? We'd love to hear it. Let's talk about your next big project and turn it into something extraordinary.
+          </p>
+
+          <!-- Contact form -->
+          <form class="max-w-xl mx-auto space-y-4" onsubmit="handleSubmit(event)">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Your name"
+                class="w-full bg-white/5 border border-white/10 focus:border-luna-500/60 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 text-sm outline-none transition-colors"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email address"
+                class="w-full bg-white/5 border border-white/10 focus:border-luna-500/60 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 text-sm outline-none transition-colors"
+                required
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Project type (Web / Mobile / Both)"
+              class="w-full bg-white/5 border border-white/10 focus:border-luna-500/60 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 text-sm outline-none transition-colors"
+            />
+            <textarea
+              placeholder="Tell us about your project..."
+              rows="4"
+              class="w-full bg-white/5 border border-white/10 focus:border-luna-500/60 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 text-sm outline-none transition-colors resize-none"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              class="w-full btn-luna text-white font-semibold py-4 rounded-xl text-base shadow-2xl"
+            >
+              Send Message 🚀
+            </button>
+          </form>
+
+          <!-- Social / contact links -->
+          <div class="flex flex-wrap items-center justify-center gap-6 mt-10 text-gray-500 text-sm">
+            <a href="mailto:hello@lunawhizz.com" class="flex items-center gap-2 hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              hello@lunawhizz.com
+            </a>
+            <span class="text-white/10">|</span>
+            <a href="#" class="flex items-center gap-2 hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              @lunawhizz
+            </a>
+            <span class="text-white/10">|</span>
+            <a href="#" class="flex items-center gap-2 hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+              @lunawhizz
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       FOOTER
+  ════════════════════════════════ -->
+  <footer class="border-t border-white/5 py-10 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-600 text-sm">
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-lg btn-luna flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="white"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+        <span class="text-white font-semibold">LunaWhizz</span>
+        <span>— Web & Mobile Development Studio</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#portfolio" class="hover:text-white transition-colors">Portfolio</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
+      <div>© 2026 LunaWhizz. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════ -->
+  <script>
+    // ════════════════════════════════
+    // SITES DATA
+    // ════════════════════════════════
+    const SITES = [
+      {
+        name: 'Luna Shortzz',
+        subtitle: 'Short-form video sharing platform',
+        description: 'Dive into a TikTok-style platform for creators to share, discover, and go viral with snappy short videos. Features include live reactions, trending feeds, and creator analytics.',
+        badge: { label: 'Short Videos', bg: 'bg-pink-500/20', text: 'text-pink-300', border: 'border-pink-500/30' },
+        tags: [
+          { label: 'React Native', bg: 'bg-pink-500/10', text: 'text-pink-400' },
+          { label: 'Video Streaming', bg: 'bg-pink-500/10', text: 'text-pink-400' },
+          { label: 'Firebase', bg: 'bg-pink-500/10', text: 'text-pink-400' },
+        ],
+        accent: { link: 'text-pink-400', hover: 'hover:text-pink-300', icon: 'from-pink-500 to-orange-500' },
+        cta: 'Visit Site',
+        url: '#',
+        privacyUrl: 'sites/luna-shortz/privacy-policy.html',
+        live: true,
+        previewBg: 'from-[#0d0818] to-[#1a0530]',
+        previewBlob1: 'bg-pink-500/25',
+        previewBlob2: 'bg-orange-500/20',
+        previewHtml: `
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-orange-500 flex items-center justify-center shadow-xl animate-float">
+                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <div class="flex gap-2">
+                <div class="w-20 h-2 bg-white/20 rounded-full"></div>
+                <div class="w-12 h-2 bg-white/10 rounded-full"></div>
+              </div>
+              <div class="flex gap-2 mt-2">
+                <div class="w-10 h-14 bg-gradient-to-b from-pink-500/30 to-orange-500/30 rounded-lg border border-white/10"></div>
+                <div class="w-10 h-14 bg-gradient-to-b from-purple-500/30 to-pink-500/30 rounded-lg border border-white/10"></div>
+                <div class="w-10 h-14 bg-gradient-to-b from-orange-500/30 to-yellow-500/30 rounded-lg border border-white/10"></div>
+              </div>
+            </div>
+          </div>`,
+        previewExtra: `<div class="absolute top-4 right-4"><span class="w-2 h-2 bg-green-400 rounded-full inline-block animate-pulse"></span></div>`,
+        cardIconSvg: `<svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`,
+        delay: '0s',
+      },
+      {
+        name: 'LunaFlix',
+        subtitle: 'On-demand video streaming platform',
+        description: 'A Netflix-inspired streaming platform with curated film libraries, personalised recommendations, watch-party features, and adaptive HLS streaming for any device.',
+        badge: { label: 'Streaming', bg: 'bg-red-500/20', text: 'text-red-300', border: 'border-red-500/30' },
+        tags: [
+          { label: 'Next.js', bg: 'bg-red-500/10', text: 'text-red-400' },
+          { label: 'HLS Streaming', bg: 'bg-red-500/10', text: 'text-red-400' },
+          { label: 'Prisma', bg: 'bg-red-500/10', text: 'text-red-400' },
+        ],
+        accent: { link: 'text-red-400', hover: 'hover:text-red-300', icon: 'from-red-600 to-rose-500' },
+        cta: 'Visit Site',
+        url: '#',
+        privacyUrl: '#',
+        live: false,
+        previewBg: 'from-[#0d1020] to-[#0a1a3a]',
+        previewBlob1: 'bg-red-500/20',
+        previewBlob2: 'bg-blue-500/15',
+        previewHtml: `
+          <div class="absolute inset-0 flex items-center justify-center p-6">
+            <div class="w-full">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="text-red-500 font-black text-sm">LUNAFLIX</div>
+                <div class="flex gap-3 ml-4">
+                  <div class="w-8 h-1.5 bg-white/20 rounded-full"></div>
+                  <div class="w-8 h-1.5 bg-white/20 rounded-full"></div>
+                  <div class="w-8 h-1.5 bg-white/20 rounded-full"></div>
+                </div>
+              </div>
+              <div class="w-full h-14 bg-gradient-to-r from-red-900/60 to-blue-900/40 rounded-xl border border-white/10 mb-2 flex items-center px-3 gap-2">
+                <div class="w-6 h-6 rounded-lg bg-red-500/50 flex items-center justify-center">
+                  <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <div class="flex-1">
+                  <div class="w-20 h-1.5 bg-white/40 rounded-full mb-1"></div>
+                  <div class="w-12 h-1 bg-white/20 rounded-full"></div>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <div class="flex-1 h-8 rounded-lg bg-purple-900/50 border border-white/10"></div>
+                <div class="flex-1 h-8 rounded-lg bg-blue-900/50 border border-white/10"></div>
+                <div class="flex-1 h-8 rounded-lg bg-red-900/50 border border-white/10"></div>
+                <div class="flex-1 h-8 rounded-lg bg-teal-900/50 border border-white/10"></div>
+              </div>
+            </div>
+          </div>`,
+        previewExtra: '',
+        cardIconSvg: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
+        delay: '.15s',
+      },
+      {
+        name: 'Luna TicTacToe',
+        subtitle: 'Multiplayer browser game',
+        description: 'A sleek real-time multiplayer Tic-Tac-Toe game with smooth animations, online matchmaking, score tracking, and dark-mode glassmorphism UI that makes every match feel epic.',
+        badge: { label: 'Game', bg: 'bg-green-500/20', text: 'text-green-300', border: 'border-green-500/30' },
+        tags: [
+          { label: 'Vanilla JS', bg: 'bg-green-500/10', text: 'text-green-400' },
+          { label: 'WebSockets', bg: 'bg-green-500/10', text: 'text-green-400' },
+          { label: 'Socket.io', bg: 'bg-green-500/10', text: 'text-green-400' },
+        ],
+        accent: { link: 'text-green-400', hover: 'hover:text-green-300', icon: 'from-green-500 to-teal-500' },
+        cta: 'Play Now',
+        url: '#',
+        privacyUrl: 'sites/luna-tictactoe/privacy-policy.html',
+        live: false,
+        previewBg: 'from-[#081a10] to-[#0d2a18]',
+        previewBlob1: 'bg-green-500/20',
+        previewBlob2: 'bg-teal-500/15',
+        previewHtml: `
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="relative">
+              <div class="grid grid-cols-3 gap-1.5">
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"><span class="text-green-400 font-black text-xl">X</span></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"><span class="text-purple-400 font-black text-xl">O</span></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"><span class="text-green-400 font-black text-xl">X</span></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"><span class="text-purple-400 font-black text-xl">O</span></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"><span class="text-green-400 font-black text-xl">X</span></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"><span class="text-purple-400 font-black text-xl">O</span></div>
+                <div class="w-12 h-12 rounded-xl glass border border-white/10 flex items-center justify-center"></div>
+              </div>
+              <div class="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="top:21px;"></div>
+            </div>
+          </div>`,
+        previewExtra: `
+          <div class="absolute top-4 right-4 flex gap-2 text-xs">
+            <span class="glass px-2 py-1 rounded-lg text-green-400">X: 3</span>
+            <span class="glass px-2 py-1 rounded-lg text-purple-400">O: 2</span>
+          </div>`,
+        cardIconSvg: `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+        delay: '.3s',
+      },
+    ];
+
+    // ── Scroll reveal (declared here so renderSites can use it) ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Render sites cards ──
+    (function renderSites() {
+      const ARROW = `<svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>`;
+      const SHIELD = `<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`;
+
+      const grid = document.getElementById('sites-grid');
+      grid.innerHTML = SITES.map((s) => `
+        <div class="group glass glass-hover rounded-3xl overflow-hidden reveal" style="transition-delay:${s.delay}">
+          <div class="relative h-52 bg-gradient-to-br ${s.previewBg} overflow-hidden">
+            <div class="absolute -top-8 -right-8 w-36 h-36 ${s.previewBlob1} rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-8 -left-8 w-36 h-36 ${s.previewBlob2} rounded-full blur-2xl"></div>
+            ${s.previewHtml}
+            <div class="absolute top-4 left-4">
+              <span class="badge ${s.badge.bg} ${s.badge.text} border ${s.badge.border}">${s.badge.label}</span>
+            </div>
+            ${s.previewExtra}
+          </div>
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-white mb-1">${s.name}</h3>
+                <p class="text-gray-400 text-sm">${s.subtitle}</p>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br ${s.accent.icon} flex items-center justify-center flex-shrink-0 shadow-lg">
+                ${s.cardIconSvg}
+              </div>
+            </div>
+            <p class="text-gray-500 text-sm leading-relaxed mb-5">${s.description}</p>
+            <div class="flex flex-wrap gap-2 mb-5">
+              ${s.tags.map(t => `<span class="badge ${t.bg} ${t.text}">${t.label}</span>`).join('')}
+            </div>
+            <div class="flex items-center justify-between">
+              <a href="${s.url}" class="flex items-center gap-2 ${s.accent.link} ${s.accent.hover} text-sm font-semibold transition-colors group-hover:gap-3">
+                ${s.cta} ${ARROW}
+              </a>
+              <a href="${s.privacyUrl}" target="_blank" class="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors">
+                ${SHIELD} Privacy Policy
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // re-observe new cards for scroll reveal
+      grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    })();
+
+    
+    // ── Navbar glass on scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.style.background = 'rgba(7,4,15,0.85)';
+        navbar.style.backdropFilter = 'blur(20px)';
+        navbar.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+      } else {
+        navbar.style.background = 'transparent';
+        navbar.style.backdropFilter = 'none';
+        navbar.style.borderBottom = 'none';
+      }
+    });
+
+    // ── Mobile menu ──
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+    function closeMobile() {
+      document.getElementById('mobile-menu').classList.add('hidden');
+      document.getElementById('mobile-sites-list').classList.add('hidden');
+      document.getElementById('mobile-sites-chevron').style.transform = '';
+    }
+
+    // ── Mobile sites accordion ──
+    function toggleMobileSites() {
+      const list = document.getElementById('mobile-sites-list');
+      const chevron = document.getElementById('mobile-sites-chevron');
+      const open = !list.classList.contains('hidden');
+      list.classList.toggle('hidden', open);
+      list.classList.toggle('flex', !open);
+      chevron.style.transform = open ? '' : 'rotate(180deg)';
+    }
+
+    // ── Form submit ──
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.textContent = 'Message Sent! ✅';
+      btn.disabled = true;
+      btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      setTimeout(() => {
+        btn.textContent = 'Send Message 🚀';
+        btn.disabled = false;
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
